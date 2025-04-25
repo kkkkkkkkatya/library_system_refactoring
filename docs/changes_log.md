@@ -12,3 +12,19 @@
 - Легше додавати методи (`mark_available`, `__repr__`)
 - Можна перевіряти дані при ініціалізації
 - Читабельніший код
+
+## [2] Technique: Extract Method — find_book_by_title
+
+**Before**: пошук книги реалізовувався прямо у методі borrow_book
+**After**: винесено у окремий метод в BookService
+
+## [2] Technique: Extract Class / Move Method — BookService, UserService
+
+**Before**: вся логіка пошуку була всередині LibrarySystem
+**After**: створено окремі сервіси для роботи з книгами і користувачами
+
+**Benefits**:
+- Вищий рівень абстракції
+- Менше відповідальності на LibrarySystem
+- Код легше тестувати та підтримувати
+- 
