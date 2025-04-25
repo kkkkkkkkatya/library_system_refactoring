@@ -1,13 +1,15 @@
-from .models import Book, User
-from .services.book_service import BookService
-from .services.user_service import UserService
+from models.user_model import User
+from models.book_model import Book
+from services.book_service import BookService
+from services.user_service import UserService
+from services.borrowing_manager import BorrowingManager
 
 
 class LibrarySystem:
     def __init__(self):
         self.books = []
         self.users = []
-        self.borrowed_books = {}
+        self.borrowing_manager = BorrowingManager()
 
     def add_book(self, title, author, year):
         self.books.append(Book(title, author, year))
@@ -17,12 +19,11 @@ class LibrarySystem:
 
     def borrow_book(self, user_name, book_title):
         user = UserService.find_user_by_name(self.users, user_name)
-        book = BookService.find_book_by_title(self.books, book_title)
-
         if not user:
             print("User not found")
             return
 
+        book = BookService.find_book_by_title(self.books, book_title)
         if not book:
             print("Book not found")
             return
@@ -32,7 +33,7 @@ class LibrarySystem:
             return
 
         book.mark_unavailable()
-        self.borrowed_books.setdefault(user.name, []).append(book)
+        self.borrowing_manager.add_borrowing(user, book)
         print(f"{user.name} borrowed {book.title}")
 
     def return_book(self, user_name, book_title):
@@ -41,15 +42,13 @@ class LibrarySystem:
             print("User not found")
             return
 
-        if user.name not in self.borrowed_books:
+        if not self.borrowing_manager.has_borrowed(user):
             print("User has not borrowed any books")
             return
 
-        for book in self.borrowed_books[user.name]:
-            if book.title == book_title:
-                book.mark_available()
-                self.borrowed_books[user.name].remove(book)
-                print(f"{user.name} returned {book.title}")
-                return
-
-        print("Book not found in user's borrowed list")
+        returned_book = self.borrowing_manager.return_book(user, book_title)
+        if returned_book:
+            returned_book.mark_available()
+            print(f"{user.name} returned {returned_book.title}")
+        else:
+            print("Book not found in user's borrowed list")

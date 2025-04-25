@@ -18,7 +18,7 @@
 **Before**: пошук книги реалізовувався прямо у методі borrow_book
 **After**: винесено у окремий метод в BookService
 
-## [2] Technique: Extract Class / Move Method — BookService, UserService
+## [3] Technique: Extract Class / Move Method — BookService, UserService
 
 **Before**: вся логіка пошуку була всередині LibrarySystem
 **After**: створено окремі сервіси для роботи з книгами і користувачами
@@ -27,4 +27,18 @@
 - Вищий рівень абстракції
 - Менше відповідальності на LibrarySystem
 - Код легше тестувати та підтримувати
-- 
+
+## [4] Technique: Replace Nested Conditional with Guard Clauses
+
+**Before**: вкладені if/else перевірки
+**After**: перевірки винесено в guard clauses
+
+## [5] Technique: Extract Class — BorrowingManager
+
+**Before**: позичені книги зберігались у словнику (Dict[str, List[Book]])
+**After**: створено клас BorrowingManager + клас Borrowing
+
+**Benefits**:
+- Краще структурування даних
+- Простіший доступ до позичених книг
+- Можливість гнучко змінювати логіку в майбутньому
