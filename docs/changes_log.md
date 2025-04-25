@@ -42,3 +42,8 @@
 - Краще структурування даних
 - Простіший доступ до позичених книг
 - Можливість гнучко змінювати логіку в майбутньому
+
+## [6] Add basic unit tests with edge-cases
+- test borrowing manager
+- test library system
+- test services

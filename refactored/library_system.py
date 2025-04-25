@@ -1,8 +1,8 @@
-from models.user_model import User
-from models.book_model import Book
-from services.book_service import BookService
-from services.user_service import UserService
-from services.borrowing_manager import BorrowingManager
+from refactored.models.user_model import User
+from refactored.models.book_model import Book
+from refactored.services.book_service import BookService
+from refactored.services.user_service import UserService
+from refactored.services.borrowing_manager import BorrowingManager
 
 
 class LibrarySystem:
